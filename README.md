@@ -34,7 +34,7 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 *  **2024-12**: The demo of visualizing different facial masking strategies that are introduced in FSFM-3C for MIM is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-3C_facial_masking_for_MIM'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Facial_Masking-orange'></a>
 *  **2024-12**: The online detectors (based on simply fine-tuned models of the paper implementation) is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>
 *  **2024-12**: The pre-trained/fine-tuned models and pre-training/fine-tuning logs of the paper implementation are available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
-*  **2024-12**: All codes including data-preprocessing, pre-training, fine-tuning, and testing are released at [this page]]([Insert](https://github.com/wolo-wolo/FSFM))
+*  **2024-12**: All codes including data-preprocessing, pre-training, fine-tuning, and testing are released at [this page](https://github.com/wolo-wolo/FSFM)
 *  **2024-12**: Our paper is available at <a href='https://arxiv.org/abs/2412.12032'><img src='https://img.shields.io/badge/Paper-arXiv-red'></a>
 
 ## Table of Contents
