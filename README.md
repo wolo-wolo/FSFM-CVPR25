@@ -72,8 +72,9 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 
 # 🔧 Installation 
 <a id="installation"></a>
-Git clone this repository, creating a conda environment and activate it via the following command: 
+Git clone this repository, creating a conda environment, and activate it via the following command: 
 ```bash
+git clone https://github.com/wolo-wolo/FSFM.git
 conda create -n fsfm3c python=3.9
 conda activate fsfm3c
 pip install -r requirements.txt
@@ -109,7 +110,7 @@ For paper implementation, we have pre-trained our model on the following dataset
 <a id="toolkit-preparation"></a>
 <summary style="font-size: 20px; font-weight: bold;">⬇️ Toolkit Preparation</summary>
 
-We use **DLIB** for face detection, as well as the **FACER** toolkit for face parsing. Download **FACER** toolkits in advance.
+We use **DLIB** for face detection and the **FACER** toolkit for face parsing. Download the **FACER** toolkits in advance.
 - [FACER](https://github.com/FacePerceiver/facer)
 ```bash
 cd /datasets/pretrain/preprocess/tools
@@ -177,14 +178,14 @@ We use **DLIB** for face detection with a 30% addition cropping size.  Run `/dat
 cd /datasets/pretrain/
 python dataset_preprocess.py --dataset [VF2, FF++_o, YTF]
 ```
-The facial images from each datasets :
+The facial images from each dataset:
 - **VF2** : ~300W facial images, **VGGFace2**, including the full train and test subsets
 - **YTF** : ~60W facial images, **YouTubeFace**, including 3,425 videos from YouTube, already broken to frames
 - **FF++_o** : ~10W facial images for 128_frames per video, ~43W for all_frames per video, from the **original YouTube subset** of **FaceForensics++ (FF++) c23 (HQ)** version, 
 includes 720 training and 140 validation videos
 _(~10W serves for our some ablations due to limited computational resources)_ 
   > You can specific the `FF_compression` and `FF_num_frames ` in `/datasets/pretrain/preprocess/config/default.py`,
-  > as an example for preprocessing facial video dataset .
+  > as an example for preprocessing facial video dataset.
 
 </details>
   
@@ -456,7 +457,7 @@ python dataset_preprocess.py --dataset [CelebDFv2, DFDC, DFDC_P, WildDeepfake, C
 
 # construct the FF++_DeepFakes(c23) subset for our another <unseen DiFF (Diffusion face forgery detection) task> or optional <cross-manipulation exps in FF++>.
 python dataset_preprocess.py --dataset FF++_each    # extracting faces from videos and making FF++ train/val/ sets for four manipulations
-# This would yield DS_FF++_each_cls/ dataset (we only use its DeepFakes subset for our DiFF task), placed in following folder:
+# This would yield DS_FF++_each_cls/ dataset (we only use its DeepFakes subset for our DiFF task), placed in the following folder:
 # finetune_datasets/
 # └── deepfakes_detection/                           
 #     └── FaceForensics
@@ -502,11 +503,11 @@ CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 python -m torch.distributed.launch --
 > 📜Paper Implementation: the [$🖲️script$](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/finetuned_models/FF%2B%2B_c23_32frames/README.md) for fine-tuning, 
 > fine-tuned checkpoint, and logs are available at [🤗here](https://huggingface.co/Wolowolo/fsfm-3c/tree/main/finetuned_models/FF%2B%2B_c23_32frames) \
 > 🧩 Most settings adhere to the [MAE](https://github.com/facebookresearch/mae/blob/main/FINETUNE.md) finetuning recipe. 
-> Except for adapting from ImageNet to the DfD task, we did not make much efforts to adjust the hyper-parameters.
+> Except for adapting from ImageNet to the DfD task, we did not make much effort to adjust the hyper-parameters.
 - `--finetune`: ckpt of (FSFM) pre-trained ViT models. Get our pre-trained checkpoints from [Pre-trained Checkpoints](#pretrained-checkpoints) or download [🤗here](https://huggingface.co/Wolowolo/fsfm-3c/tree/main/pretrained_models/VF2_ViT-B)
 - Here the effective batch size is 32 `batch_size` (per gpu) * 1 `nodes` * 2 (gpus per node)  = 64.
 - `blr` is the base learning rate. The actual `lr` is computed by the [linear scaling rule](https://arxiv.org/abs/1706.02677): `lr` = `blr` * effective batch size / 256.
-- The DfD fine-tuning hyper-parameters are slightly different from the default MAE baseline for ImageNet classification.
+- The DfD fine-tuning hyper-parameters slightly differ from the default MAE baseline for ImageNet classification.
 - Fine-tuning/Training time is ~1h for 10 epochs in 2 A6000 GPUs. (~6250MiB Memory-Usage per GPU)
 
 <details style="margin-left: 20px;">
@@ -544,7 +545,7 @@ CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 python -m torch.distributed.launch --
      ```
     - where `--train_split/--val_split` provides `image_path label` pairs.
     - `--dataset_abs_path` : If the `--train_split/--val_split` provides the relative path to the image, this is the prefix path to form the full path; 
-    If the splits already provides the absolute path, set it to None.
+    If the splits already provide the absolute path, set it to None.
     - `--delimiter_in_spilt` : The delimiter used to split the image_path and label in the `--train_split/--val_split`, 
      set `' '` for `image_path label`; set  `','` for `image_path,label`; set  `', '` for `image_path, label`. 
     
@@ -573,7 +574,7 @@ CUDA_VISIBLE_DEVICES=0 OMP_NUM_THREADS=1 python -m torch.distributed.launch --np
 - The path to all test sets is placed in the `main_test_DfD.py`, modify it freely and follow the folder structure 
 (provide the parent path of `test` sub-folder to dict variance `$cross_dataset_test_path$`).
 
-- To create test dataloader from labels file, append the following args:
+- To create a test dataloader from the labels file, append the following args:
   ```bash
   CUDA_VISIBLE_DEVICES=0 OMP_NUM_THREADS=1 python -m torch.distributed.launch --nproc_per_node=1 main_test_DfD.py \
         --(Omit other params...)
@@ -767,7 +768,7 @@ To evaluate the transferability of our method for FAS under significant domain s
 <a id="fas-dataset-preparation"></a>
 <summary style="font-size: 20px; font-weight: bold;">⬇️ Dataset Preparation</summary>
 
-For downstream 0-shot cross-domain FAS task, we directly follow the Protocol 1 (MCIO) 
+For downstream 0-shot cross-domain FAS task, we directly follow Protocol 1 (MCIO) 
 in [few_shot_fas](https://github.com/hhsinping/few_shot_fas) to prepare and preprocess data.
 - Put the prepared datasets `data/` to our **default Folder Structure**, as follows:
   ```bash
