@@ -75,10 +75,12 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 Git clone this repository, creating a conda environment, and activate it via the following command: 
 ```bash
 git clone https://github.com/wolo-wolo/FSFM.git
+cd FSFM/
 conda create -n fsfm3c python=3.9
 conda activate fsfm3c
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117 # run this first. (our exp implementation)
 pip install -r requirements.txt
-# pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117 (our implementation)
+
 ```
 
 ---
