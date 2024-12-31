@@ -27,7 +27,6 @@ huggingface-hub==0.16.4
 idna==3.4
 imageio==2.31.2
 importlib-metadata==6.7.0
-inplace-abn==1.1.0
 ipydatawidgets==4.3.5
 ipykernel==6.16.2
 ipython==7.34.0
