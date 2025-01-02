@@ -26,6 +26,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset, ConcatDataset
 from torchvision import transforms
 from torch.nn import functional as F
+import fcntl
 
 
 class collate_fn_crfrp:
@@ -239,20 +240,32 @@ def build_dataset(is_train, args):
 
 
 def build_transform(is_train, args):
+
     if args.normalize_from_IMN:
         mean = IMAGENET_DEFAULT_MEAN
         std = IMAGENET_DEFAULT_STD
-        # print(f'mean:{mean}, std:{std}')
+        # print(f'Using ImageNet normalization: mean={mean}, std={std}')
+
     else:
-        if not os.path.exists(os.path.join(args.output_dir, "/pretrain_ds_mean_std.txt")) and not args.eval:
-            shutil.copyfile(os.path.dirname(args.finetune) + '/pretrain_ds_mean_std.txt',
-                            os.path.join(args.output_dir) + '/pretrain_ds_mean_std.txt')
-        with open(os.path.join(os.path.dirname(args.resume)) + '/pretrain_ds_mean_std.txt' if args.eval
-                  else os.path.join(args.output_dir) + '/pretrain_ds_mean_std.txt', 'r') as file:
-            ds_stat = json.loads(file.readline())
-            mean = ds_stat['mean']
-            std = ds_stat['std']
-            # print(f'mean:{mean}, std:{std}')
+        pretrain_ds_mean_std_path = os.path.join(args.output_dir, "pretrain_ds_mean_std.txt")
+        if not os.path.exists(pretrain_ds_mean_std_path) and not args.eval:
+            shutil.copyfile(os.path.dirname(args.finetune) + '/pretrain_ds_mean_std.txt', pretrain_ds_mean_std_path)
+        json_file_path = os.path.join(os.path.dirname(args.resume), 'pretrain_ds_mean_std.txt') if args.eval \
+            else pretrain_ds_mean_std_path
+
+        with open(json_file_path, 'r') as file:
+            fcntl.flock(file, fcntl.LOCK_SH)
+            try:
+                first_line = file.readline().strip()
+                if not first_line:
+                    raise ValueError(f"The file {json_file_path} is empty or not properly formatted as JSON.")
+                ds_stat = json.loads(first_line)
+                mean = ds_stat['mean']
+                std = ds_stat['std']
+                # print(f'Loaded normalization stats from {json_file_path}: mean={mean}, std={std}')
+            finally:
+                # Release the file lock
+                fcntl.flock(file, fcntl.LOCK_UN)
 
     if args.apply_simple_augment:
         if is_train:
