@@ -104,41 +104,47 @@ def face_parsing(face_ds_path,
         for subdir, dirs, files in os.walk(face_ds_path):
             for file in tqdm(files):
                 if file[-4:] == '.jpg' or '.png':
-                    img = Image.open(os.path.join(subdir, file))
-                    img = img.resize((cfg.face_size, cfg.face_size), Image.BICUBIC)
-                    image = torch.from_numpy(np.array(img.convert('RGB')))
-                    image = image.unsqueeze(0).permute(0, 3, 1, 2).to(device=device) # image: B x C x F x W
                     try:
-                        faces = face_detector(image)
-                        face = {
-                            "image_ids": faces["image_ids"][:1],  # we only keep the face with largest score per img
-                            "rects": faces["rects"][:1],
-                            "points": faces["points"][:1],
-                            "scores": faces["scores"][:1]
-                        }
+                        img = Image.open(os.path.join(subdir, file))
+                        img = img.resize((cfg.face_size, cfg.face_size), Image.BICUBIC)
+                        image = torch.from_numpy(np.array(img.convert('RGB')))
+                        image = image.unsqueeze(0).permute(0, 3, 1, 2).to(device=device)  # image: B x C x F x W
+                        try:
+                            faces = face_detector(image)
+                            face = {
+                                "image_ids": faces["image_ids"][:1],  # we only keep the face with largest score per img
+                                "rects": faces["rects"][:1],
+                                "points": faces["points"][:1],
+                                "scores": faces["scores"][:1]
+                            }
 
-                        face_seg = face_parser(image, face)
-                        seg_logits = face_seg['seg']['logits']
-                        seg_probs = seg_logits.softmax(dim=1)  # nfaces x nclasses x h x w
-                        seg_probs = seg_probs.data  # torch.Size([1, 11, 224, 224])
-                        parsing = seg_probs.argmax(1)  # [1, 224, 224]
+                            face_seg = face_parser(image, face)
+                            seg_logits = face_seg['seg']['logits']
+                            seg_probs = seg_logits.softmax(dim=1)  # nfaces x nclasses x h x w
+                            seg_probs = seg_probs.data  # torch.Size([1, 11, 224, 224])
+                            parsing = seg_probs.argmax(1)  # [1, 224, 224]
 
-                        parsing_map = parsing.data.cpu().numpy()  # [1, 224, 224] int64
-                        parsing_map = parsing_map.astype(np.int8)  # smaller space
-                        # print(np.unique(parsing_map)) # [ 0  1  2  3  4  5  6  7  8  9 10]
+                            parsing_map = parsing.data.cpu().numpy()  # [1, 224, 224] int64
+                            parsing_map = parsing_map.astype(np.int8)  # smaller space
+                            # print(np.unique(parsing_map)) # [ 0  1  2  3  4  5  6  7  8  9 10]
 
-                        file = file[:-4] + cfg.img_format
-                        img.save(os.path.join(face_img_path, file))
-                        save_path = os.path.join(face_pm_path, file).replace(cfg.img_format, cfg.pm_format)
-                        np.save(save_path, parsing_map)
-                        if save_vis_ps:
-                            vis_parsing_maps(img, parsing_map.squeeze(0), save_path=os.path.join(vis_pm_path, file))
+                            file = file[:-4] + cfg.img_format
+                            img.save(os.path.join(face_img_path, file))
+                            save_path = os.path.join(face_pm_path, file).replace(cfg.img_format, cfg.pm_format)
+                            np.save(save_path, parsing_map)
+                            if save_vis_ps:
+                                vis_parsing_maps(img, parsing_map.squeeze(0), save_path=os.path.join(vis_pm_path, file))
 
-                    except (KeyError, IndexError) as e:
-                        print(f"fail of face parsing {file}: {e}")
-                        no_parsing_num += 1
-                        # parsing_map = np.zeros((1, 224, 224), dtype="int64")  # [1, 224, 224]
-                        continue
+                        except (KeyError, IndexError) as e:
+                            print(f"fail of face parsing {file}: {e}")
+                            no_parsing_num += 1
+                            # parsing_map = np.zeros((1, 224, 224), dtype="int64")  # [1, 224, 224]
+                            continue
+
+                    except UnidentifiedImageError:
+                        print(f"Cannot identify image file: {os.path.join(subdir, file)}")
+                    except Exception as e:
+                        print(f"Error opening image file {os.path.join(subdir, file)}: {e}")
 
         print('no_parsing_face_num', no_parsing_num)
 
