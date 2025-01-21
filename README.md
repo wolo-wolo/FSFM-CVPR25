@@ -539,15 +539,15 @@ CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 python -m torch.distributed.launch --
      ```bash
       CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 python -m torch.distributed.launch --node_rank=0 --nproc_per_node=2 main_finetune_DfD.py \
           --(Omit other params...)
-          --finetune_data_path [] \    # do not provided this arg !!！
+          --finetune_data_path [] \    # do not provide this arg !!！
           --train_split {train.txt} \    # path to the train label file
           --val_split {val.txt} \    # path to the val label file
-          --dataset_abs_path abs_path or do not provided this arg \    # see below
+          --dataset_abs_path abs_path or do not provide this arg \    # see below
           --delimiter_in_spilt ' ' \    # see below
      ```
     - where `--train_split/--val_split` provides `image_path label` pairs.
     - `--dataset_abs_path` : If the `--train_split/--val_split` provides the relative path to the image, this is the prefix path to form the full path; 
-    If the splits already provide the absolute path, set it to None.
+    If the splits already provide the absolute path, do not provide this arg.
     - `--delimiter_in_spilt` : The delimiter used to split the image_path and label in the `--train_split/--val_split`, 
      set `' '` for `image_path label`; set  `','` for `image_path,label`; set  `', '` for `image_path, label`. 
     
