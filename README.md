@@ -542,7 +542,7 @@ CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 python -m torch.distributed.launch --
           --finetune_data_path [] \    # do not provided this arg !!！
           --train_split {train.txt} \    # path to the train label file
           --val_split {val.txt} \    # path to the val label file
-          --dataset_abs_path None or abs_path \    # see below
+          --dataset_abs_path abs_path or do not provided this arg \    # see below
           --delimiter_in_spilt ' ' \    # see below
      ```
     - where `--train_split/--val_split` provides `image_path label` pairs.
