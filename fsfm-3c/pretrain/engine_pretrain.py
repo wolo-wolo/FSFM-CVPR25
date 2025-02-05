@@ -119,6 +119,8 @@ def train_one_epoch(model: torch.nn.Module,
         loss_scaler(loss, optimizer, parameters=model.parameters(),
                     update_grad=(data_iter_step + 1) % accum_iter == 0)
         if (data_iter_step + 1) % accum_iter == 0:
+            #  Implement gradient clipping to prevent the gradients from exploding.
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.zero_grad()
 
         # EMA update for target branch
