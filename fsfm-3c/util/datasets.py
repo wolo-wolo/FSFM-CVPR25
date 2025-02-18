@@ -262,9 +262,9 @@ def build_transform(is_train, args):
                 ds_stat = json.loads(first_line)
                 mean = ds_stat['mean']
                 std = ds_stat['std']
-                # print(f'Loaded normalization stats from {json_file_path}: mean={mean}, std={std}')
+            except json.JSONDecodeError:
+                raise ValueError(f"The file {json_file_path} is not properly formatted as JSON.")
             finally:
-                # Release the file lock
                 fcntl.flock(file, fcntl.LOCK_UN)
 
     if args.apply_simple_augment:
