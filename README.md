@@ -31,6 +31,7 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 </div>
 
 ## Release🎉 
+*  **2025-02**:  We updated a Unified Physical-Digital Facial Attack&Forgery Images&Videos Detector to identify [Real&Bonafide, Deepfake, Diffusion&AIGC, Spooing&Presentation-attacks] at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>. This detector is based on the FSFM ViT-B/16 (Pre-trained on VGGFace2 for 800epochs) and finetuned on a 3.6M dataset for 4-class classification (sourced from many public datasets).
 *  **2024-12**: The demo of visualizing different facial masking strategies that are introduced in FSFM-3C for MIM is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-3C_facial_masking_for_MIM'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Facial_Masking-orange'></a>
 *  **2024-12**: The online detectors (based on simply fine-tuned models of the paper implementation) is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>
 *  **2024-12**: The pre-trained/fine-tuned models and pre-training/fine-tuning logs of the paper implementation are available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
@@ -306,7 +307,7 @@ load the ViT weights from the Online Network and apply normalization from Normal
 > - Resuming Weights for Continued Pre-training:
 additionally, download the Target Network and refer to [Pre-training/Resume from Checkpoint](#resume-for-pretraining)
 > - 💡 Further Improvements:
-you can pre-train for more epochs, adopt larger ViTs, and use more faces. Due to computational limitations, we will continue to update models.
+You can pre-train for more epochs, adopt smaller or larger ViTs, use more unlabeled real faces, and resize face images to a larger size. Due to computational limitations, we will also continue to update models.
 </details>
 
 <details>
