@@ -1,6 +1,6 @@
 <div align="center">
 
-# FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning
+# FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning [CVPR25]
 
 
 [Gaojian Wang](https://scholar.google.com/citations?user=tpP4cFQAAAAJ&hl=zh-CN&oi=ao)<sup>1,2</sup> &emsp; [Feng Lin](https://flin.group/)<sup>1,2</sup> &emsp; [Tong Wu](https://github.com/Coco-T-T?tab=repositories)<sup>1,2</sup> &emsp;
@@ -31,6 +31,7 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 </div>
 
 ## Release🎉 
+*  **2025-02**: Our paper has been accepted at the [CVPR25](https://cvpr.thecvf.com/Conferences/2025/AcceptedPapers) !
 *  **2025-02**:  We updated a Unified Physical-Digital Facial Attack&Forgery Images&Videos Detector to identify [Real&Bonafide, Deepfake, Diffusion&AIGC, Spooing&Presentation-attacks] at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>. This detector is based on the FSFM ViT-B/16 (Pre-trained on VGGFace2 for 800epochs) and finetuned on a 3.6M dataset for 4-class classification (sourced from many public datasets).
 *  **2024-12**: The demo of visualizing different facial masking strategies that are introduced in FSFM-3C for MIM is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-3C_facial_masking_for_MIM'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Facial_Masking-orange'></a>
 *  **2024-12**: The online detectors (based on simply fine-tuned models of the paper implementation) is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>
