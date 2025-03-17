@@ -19,7 +19,10 @@ from pathlib import Path
 
 import torch
 import torch.distributed as dist
-from torch._six import inf
+try:
+    from torch import inf  # PyTorch ≥1.8
+except ImportError:
+    from torch._six import inf  # PyTorch <1.8
 
 
 class SmoothedValue(object):
