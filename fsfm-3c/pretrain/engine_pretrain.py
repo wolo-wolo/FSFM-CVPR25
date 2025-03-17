@@ -101,6 +101,14 @@ def train_one_epoch(model: torch.nn.Module,
             cl_features = torch.cat([feat_enc.unsqueeze(1), feat_target.unsqueeze(1)], dim=1)  # [N, 2, feat_cl_dim]
             loss_cl = cl_loss(cl_features)
 
+        # check for NaN or Inf in loss_cl
+        if not torch.isfinite(loss_cl):
+            print('loss_cl is NaN or Inf, skipping this batch')
+            optimizer.zero_grad()
+            del sample_img, sample_img_mask, sample_specific_facial_region_mask, feat_target, feat_enc, cl_features, loss_cl
+            torch.cuda.empty_cache()
+            continue  # Skip this batch
+
         loss_rec = loss_rec_all + weight_sfr * loss_rec_sfr
         loss = loss_rec + weight_cl * loss_cl
         loss_value = loss.item()
@@ -110,17 +118,17 @@ def train_one_epoch(model: torch.nn.Module,
 
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
-            print("Loss is {}, stopping training".format(loss_cl_value))
-            print("Loss is {}, stopping training".format(loss_rec_all_value))
-            print("Loss is {}, stopping training".format(loss_rec_sfr_value))
+            print("loss_cl is {}, stopping training".format(loss_cl_value))
+            print("loss_rec_all is {}, stopping training".format(loss_rec_all_value))
+            print("loss_rec_sfr is {}, stopping training".format(loss_rec_sfr_value))
             sys.exit(1)
 
         loss /= accum_iter
         loss_scaler(loss, optimizer, parameters=model.parameters(),
+                    clip_grad=1.0 if (data_iter_step + 1) % accum_iter == 0 else None,
                     update_grad=(data_iter_step + 1) % accum_iter == 0)
+
         if (data_iter_step + 1) % accum_iter == 0:
-            #  Implement gradient clipping to prevent the gradients from exploding.
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.zero_grad()
 
         # EMA update for target branch
