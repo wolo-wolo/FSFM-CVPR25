@@ -102,7 +102,7 @@ def train_one_epoch(model: torch.nn.Module,
             loss_cl = cl_loss(cl_features)
 
         # check for NaN or Inf in loss_cl
-        if not torch.isfinite(loss_cl):
+        if not math.isfinite(loss_cl.item()):
             print('loss_cl is NaN or Inf, skipping this batch')
             optimizer.zero_grad()
             del sample_img, sample_img_mask, sample_specific_facial_region_mask, feat_target, feat_enc, cl_features, loss_cl
