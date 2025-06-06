@@ -830,11 +830,12 @@ python train_vit.py \
 
 If our research helps your work, please consider giving us a star ⭐ or citing us:
 ```
-@article{wang2024fsfm,
-  title={FSFM: A Generalizable Face Security Foundation Model via Self-Supervised Facial Representation Learning},
+@inproceedings{wang2025fsfm,
+  title={Fsfm: A generalizable face security foundation model via self-supervised facial representation learning},
   author={Wang, Gaojian and Lin, Feng and Wu, Tong and Liu, Zhenguang and Ba, Zhongjie and Ren, Kui},
-  journal={arXiv preprint arXiv:2412.12032},
-  year={2024}
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={24364--24376},
+  year={2025}
 }
 ```
 <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
