@@ -240,32 +240,47 @@ def build_dataset(is_train, args):
 
 
 def build_transform(is_train, args):
-
     if args.normalize_from_IMN:
         mean = IMAGENET_DEFAULT_MEAN
         std = IMAGENET_DEFAULT_STD
-        # print(f'Using ImageNet normalization: mean={mean}, std={std}')
-
     else:
-        pretrain_ds_mean_std_path = os.path.join(args.output_dir, "pretrain_ds_mean_std.txt")
-        if not os.path.exists(pretrain_ds_mean_std_path) and not args.eval:
-            shutil.copyfile(os.path.dirname(args.finetune) + '/pretrain_ds_mean_std.txt', pretrain_ds_mean_std_path)
-        json_file_path = os.path.join(os.path.dirname(args.resume), 'pretrain_ds_mean_std.txt') if args.eval \
-            else pretrain_ds_mean_std_path
+        # Try to get mean/std from file, fallback to ImageNet values if not available
+        try:
+            pretrain_ds_mean_std_path = os.path.join(args.output_dir, "pretrain_ds_mean_std.txt")
 
-        with open(json_file_path, 'r') as file:
-            fcntl.flock(file, fcntl.LOCK_SH)
-            try:
-                first_line = file.readline().strip()
-                if not first_line:
-                    raise ValueError(f"The file {json_file_path} is empty or not properly formatted as JSON.")
-                ds_stat = json.loads(first_line)
-                mean = ds_stat['mean']
-                std = ds_stat['std']
-            except json.JSONDecodeError:
-                raise ValueError(f"The file {json_file_path} is not properly formatted as JSON.")
-            finally:
-                fcntl.flock(file, fcntl.LOCK_UN)
+            # If evaluating, try to get from resume path
+            if args.eval:
+                json_file_path = os.path.join(os.path.dirname(args.resume), 'pretrain_ds_mean_std.txt')
+            else:
+                # Try to copy from finetune path first
+                if not os.path.exists(pretrain_ds_mean_std_path) and args.finetune:
+                    finetune_stats_path = os.path.join(os.path.dirname(args.finetune), 'pretrain_ds_mean_std.txt')
+                    if os.path.exists(finetune_stats_path):
+                        os.makedirs(os.path.dirname(pretrain_ds_mean_std_path), exist_ok=True)
+                        shutil.copyfile(finetune_stats_path, pretrain_ds_mean_std_path)
+                json_file_path = pretrain_ds_mean_std_path
+
+            # Read stats from file
+            if os.path.exists(json_file_path):
+                with open(json_file_path, 'r') as file:
+                    fcntl.flock(file, fcntl.LOCK_SH)
+                    try:
+                        first_line = file.readline().strip()
+                        if first_line:
+                            ds_stat = json.loads(first_line)
+                            mean = ds_stat['mean']
+                            std = ds_stat['std']
+                        else:
+                            raise ValueError("Empty file")
+                    finally:
+                        fcntl.flock(file, fcntl.LOCK_UN)
+            else:
+                raise FileNotFoundError(f"Stats file not found: {json_file_path}")
+
+        except (FileNotFoundError, ValueError, json.JSONDecodeError) as e:
+            print(f"Warning: Could not load dataset stats ({str(e)}). Using VGGFace2 values instead.")
+            mean = [0.5482207536697388, 0.42340534925460815, 0.3654651641845703]
+            std = [0.2789176106452942, 0.2438540756702423, 0.23493893444538116]
 
     if args.apply_simple_augment:
         if is_train:
