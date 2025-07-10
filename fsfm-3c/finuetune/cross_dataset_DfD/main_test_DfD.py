@@ -316,6 +316,6 @@ if __name__ == '__main__':
         args.output_dir = get_shared_folder() / str(os.getpgrp())
     args.log_dir = args.output_dir
 
-    executor = submitit.AutoExecutor(folder=args.output_dir, slurm_max_num_timeout=30)
-    executor.update_parameters(name="mae")
+    executor = submitit.AutoExecutor(folder=args.output_dir)
+    executor.update_parameters(name="fsfm")
     job = executor.submit(main(args))
