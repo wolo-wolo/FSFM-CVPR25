@@ -283,7 +283,7 @@ def make_DiFF_set_extract_face(split_set):
     for cls in range(len(fake_sub_path)):
 
         dst_path = os.path.join(split_ds_path, fake_sub_path[cls], split_set)
-        dst_path_real = os.path.join(dst_path, 'DiFF_real')
+        dst_path_real = os.path.join(dst_path, 'real')
         dst_path_fake = os.path.join(dst_path, 'fake')
         os.makedirs(dst_path_real, exist_ok=True)
         os.makedirs(dst_path_fake, exist_ok=True)
@@ -370,3 +370,4 @@ if __name__ == '__main__':
     else:
         print('choose datasets [FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, DiFF]  '
               'or add the function for your customized dataset')
+
