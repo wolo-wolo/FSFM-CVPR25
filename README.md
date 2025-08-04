@@ -692,17 +692,17 @@ python dataset_preprocess.py --dataset DiFF    # extracting faces from DiFF val/
 # finetune_datasets/
 # └── diffusion_facial_forgery_detection/                           
 #     └── DiFF
-#         ├── val_subsets/ 
-#         │   ├── FE/  ── val/ ── [DiFF_real/, fake/]
-#         │   ├── FS/  ── val/ ── [DiFF_real/, fake/]
-#         │   ├── I2I/ ── val/ ── [DiFF_real/, fake/]
-#         │   └── T2I/ ── val/ ── [DiFF_real/, fake/]
+#         ├── val_subsets/
+#         │   ├── FE/  ── val/ ── [real/, fake/]
+#         │   ├── FS/  ── val/ ── [real/, fake/]
+#         │   ├── I2I/ ── val/ ── [real/, fake/]
+#         │   └── T2I/ ── val/ ── [real/, fake/]
 #         │  
 #         └── test_subsets/
-#             ├── FE/  ── test/ ── [DiFF_real/, fake/]
-#             ├── FS/  ── test/ ── [DiFF_real/, fake/]
-#             ├── I2I/ ── test/ ── [DiFF_real/, fake/]
-#             └── T2I/ ── test/ ── [DiFF_real/, fake/]
+#             ├── FE/  ── test/ ── [real/, fake/]
+#             ├── FS/  ── test/ ── [real/, fake/]
+#             ├── I2I/ ── test/ ── [real/, fake/]
+#             └── T2I/ ── test/ ── [real/, fake/]
 ```
 - 
 </details>
@@ -843,3 +843,4 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
