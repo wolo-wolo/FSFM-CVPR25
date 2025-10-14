@@ -17,7 +17,6 @@ import cv2
 
 from tools.util import extract_face_from_fixed_num_frames
 from tools.util import extract_and_save_face
-
 align = False
 
 
@@ -39,7 +38,7 @@ def run_FF_real(compression='c23', num_frames=128):
                                cfg.FF_real_path.split('FaceForensics/')[-1], compression)
     else:
         dst_dir = os.path.join(cfg.FF_split_face_ds, str(num_frames) + '_frames',
-                               cfg.FF_real_path.split('FaceForensics/')[-1], compression)
+                           cfg.FF_real_path.split('FaceForensics/')[-1], compression)
     print("splitting FF++ real dataset, extracting face to", dst_dir)
 
     for subdir, dirs, files in os.walk(src_dir):
@@ -66,10 +65,10 @@ def run_FF_fake(compression='c23', num_frames=32):
         src_dir = os.path.join(cfg.FF_fake_path, manipulation, compression, 'videos')
         if num_frames is None:
             dst_dir = os.path.join(cfg.FF_split_face_ds, 'all_frames',
-                                   cfg.FF_fake_path.split('FaceForensics/')[-1], manipulation, compression)
+                               cfg.FF_fake_path.split('FaceForensics/')[-1], manipulation, compression)
         else:
             dst_dir = os.path.join(cfg.FF_split_face_ds, str(num_frames) + '_frames',
-                                   cfg.FF_fake_path.split('FaceForensics/')[-1], manipulation, compression)
+                               cfg.FF_fake_path.split('FaceForensics/')[-1], manipulation, compression)
         print("splitting FF++ fake dataset, extracting face to", dst_dir)
 
         for subdir, dirs, files in os.walk(src_dir):
@@ -84,8 +83,7 @@ def run_FF_fake(compression='c23', num_frames=32):
                         split = 'test'
                     dst_path = os.path.join(dst_dir, split)
                     os.makedirs(dst_path, exist_ok=True)
-                    extract_face_from_fixed_num_frames(src_video, dst_path, video.split('.mp4')[0], num_frames,
-                                                       align=align)
+                    extract_face_from_fixed_num_frames(src_video, dst_path, video.split('.mp4')[0], num_frames, align=align)
 
 
 def gen_FF_all_binary_cls_ds(src_real, src_fake, dst_path, compression):
@@ -127,8 +125,7 @@ def run_DFD(compression='raw', num_frames=32):
             for video in tqdm(files):
                 if video[-4:] == '.mp4':
                     src_video = os.path.join(subdir, video)
-                    extract_face_from_fixed_num_frames(src_video, dst_path, video.split('.mp4')[0], num_frames,
-                                                       align=align)
+                    extract_face_from_fixed_num_frames(src_video, dst_path, video.split('.mp4')[0], num_frames, align=align)
 
 
 def gen_DFD_binary_cls_ds(src_real, src_fake, dst_path, compression):
@@ -168,8 +165,7 @@ def run_CelebDFv1(num_frames=32):
                 video = sub_path[z] + '/' + file
                 if file[-4:] == '.mp4' and video in test_videos:
                     test_video_num += 1
-                    dst_path = os.path.join(cfg.CelebDFv1_split_face_ds, str(num_frames) + '_frames', 'test',
-                                            video_type)
+                    dst_path = os.path.join(cfg.CelebDFv1_split_face_ds, str(num_frames)+'_frames', 'test', video_type)
                     os.makedirs(dst_path, exist_ok=True)
                     src_video = os.path.join(subdir, file)
                     video_name = sub_path[z] + '_' + file.split('.mp4')[0]
@@ -206,42 +202,10 @@ def run_CelebDFv2(num_frames=32):
                 video = sub_path[z] + '/' + file
                 if file[-4:] == '.mp4' and video in test_videos:
                     test_video_num += 1
-                    dst_path = os.path.join(cfg.CelebDFv2_split_face_ds, str(num_frames) + '_frames', 'test',
-                                            video_type)
+                    dst_path = os.path.join(cfg.CelebDFv2_split_face_ds, str(num_frames)+'_frames', 'test', video_type)
                     os.makedirs(dst_path, exist_ok=True)
                     src_video = os.path.join(subdir, file)
                     video_name = sub_path[z] + '_' + file.split('.mp4')[0]
-                    extract_face_from_fixed_num_frames(src_video, dst_path, video_name, num_frames, align=align)
-        print("processed test videos:", test_video_num)
-
-
-def run_CelebDF_plusplus(num_frames=32):
-    sub_path = ['Celeb-real',
-                'Celeb-synthesis']
-    labels = [0, 1]
-
-    f = open(cfg.CelebDF_plusplus_path + 'List_of_testing_videos.txt', 'r')  # official label for testing set
-    test_content = f.readlines()
-    test_videos = []
-    for name in test_content:
-        test_videos.append(name[2:].replace('\n', ''))  # remove '\n' in the official label
-
-    for z in range(len(sub_path)):
-        print("splitting CelebDF++ test dataset, cropping and aligning face to", cfg.CelebDF_plusplus_split_face_ds)
-        print('process in ', sub_path[z])
-        video_type = 'real' if labels[z] == 0 else 'fake'
-
-        # prepare test videos firstly:
-        test_video_num = 0
-        for subdir, dirs, files in os.walk(os.path.join(cfg.CelebDF_plusplus_path, sub_path[z])):
-            for file in tqdm(files):
-                video = sub_path[z] + subdir.split(sub_path[z])[1] + '/' + file
-                if file[-4:] == '.mp4' and video in test_videos:
-                    test_video_num += 1
-                    dst_path = os.path.join(cfg.CelebDF_plusplus_split_face_ds, str(num_frames)+'_frames', 'test', video_type)
-                    os.makedirs(dst_path, exist_ok=True)
-                    src_video = os.path.join(subdir, file)
-                    video_name = video.replace('/', '_').split('.mp4')[0]  # unify the video name
                     extract_face_from_fixed_num_frames(src_video, dst_path, video_name, num_frames, align=align)
         print("processed test videos:", test_video_num)
 
@@ -254,7 +218,7 @@ def run_DFDC(num_frames=32):
         for file in tqdm(files):
             if file[-4:] == '.mp4':
                 label = (label_df[label_df['filename'] == file])['label']
-                dst_path = os.path.join(cfg.DFDC_split_face_ds, str(num_frames) + '_frames', 'test', cls[int(label)])
+                dst_path = os.path.join(cfg.DFDC_split_face_ds, str(num_frames)+'_frames', 'test', cls[int(label)])
                 os.makedirs(dst_path, exist_ok=True)
                 src_video = os.path.join(subdir, file)
                 video_name = file.split('.mp4')[0]
@@ -268,15 +232,14 @@ def run_DFDC_P(num_frames=32):
 
     cls = ['real', 'fake']
     for c in range(len(cls)):
-        dst_dir = os.path.join(cfg.DFDC_P_split_face_ds, str(num_frames) + '_frames', 'test', cls[c])
+        dst_dir = os.path.join(cfg.DFDC_P_split_face_ds, str(num_frames)+'_frames', 'test', cls[c])
         os.makedirs(dst_dir, exist_ok=True)
 
     for video in tqdm(label_file.keys()):
         if label_file[video]["set"] == "test":
             label = label_file[video]["label"]
             src_video = os.path.join(cfg.DFDC_P_path, video)
-            dst_path = os.path.join(cfg.DFDC_P_split_face_ds, str(num_frames) + '_frames', label_file[video]["set"],
-                                    label)
+            dst_path = os.path.join(cfg.DFDC_P_split_face_ds, str(num_frames)+'_frames', label_file[video]["set"], label)
             video_name = (video.split('/')[0] + '_' + video.split('/')[-1]).split('.mp4')[0]
             extract_face_from_fixed_num_frames(src_video, dst_path, video_name, num_frames, align=align)
 
@@ -346,62 +309,50 @@ def make_DiFF_set_extract_face(split_set):
 
 
 def get_args_parser():
-    parser = argparse.ArgumentParser('FS-VFM fine-tune data (DfD/DiFF) preprocessing', add_help=False)
+    parser = argparse.ArgumentParser('FSFM_3C fine-tune data (DfD/DiFF) preprocessing', add_help=False)
     parser.add_argument('--dataset', default='FF++',
-                        help='choose from '
-                             '[FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, CelebDF++,'
-                             'DiFF]')
+                        help='choose from [FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, DiFF]')
     return parser
 
 
 if __name__ == '__main__':
     args = get_args_parser()
     args = args.parse_args()
-
+    
     if args.dataset == 'FF++_all':
         # extract facial images:
-        if not os.path.exists(
-                f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames * 4)}_frames/original_sequences/youtube/{cfg.FF_compression}/'):
+        if not os.path.exists(f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames*4)}_frames/original_sequences/youtube/{cfg.FF_compression}/'):
             run_FF_real(compression=cfg.FF_compression, num_frames=cfg.FF_num_frames * 4)
-        if not os.path.exists(
-                f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/{cfg.FF_manipulation_list[0]}/{cfg.FF_compression}/'):
+        if not os.path.exists(f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/{cfg.FF_manipulation_list[0]}/{cfg.FF_compression}/'):
             run_FF_fake(compression=cfg.FF_compression, num_frames=cfg.FF_num_frames)
         # FF_all_binary_cls_ds, one (train/val/test) dataset with 4x FF_num_frames per real videos VS FF_num_frames per fake
         src_path_real = f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames * 4)}_frames/original_sequences/youtube/'
         src_path_fake = f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/'
-        gen_FF_all_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.FF_all_binary_cls_ds,
-                                 compression=cfg.FF_compression)
+        gen_FF_all_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.FF_all_binary_cls_ds, compression=cfg.FF_compression)
 
     elif args.dataset == 'FF++_each':
         # extract facial images:
-        if not os.path.exists(
-                f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/original_sequences/youtube/{cfg.FF_compression}/'):
+        if not os.path.exists(f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/original_sequences/youtube/{cfg.FF_compression}/'):
             run_FF_real(compression=cfg.FF_compression, num_frames=cfg.FF_num_frames)
-        if not os.path.exists(
-                f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/{cfg.FF_manipulation_list[0]}/{cfg.FF_compression}/'):
+        if not os.path.exists(f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/{cfg.FF_manipulation_list[0]}/{cfg.FF_compression}/'):
             run_FF_fake(compression=cfg.FF_compression, num_frames=cfg.FF_num_frames)
         # FF_each_binary_cls_ds, four (train/val/test) datasets with FF_num_frames per real videos VS FF_num_frames per fake for each dataset
         src_path_real = f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/original_sequences/youtube/'
         src_path_fake = f'{cfg.FF_split_face_ds}{str(cfg.FF_num_frames)}_frames/manipulated_sequences/'
-        gen_FF_each_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.FF_each_binary_cls_ds,
-                                  compression=cfg.FF_compression)
+        gen_FF_each_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.FF_each_binary_cls_ds, compression=cfg.FF_compression)
 
     elif args.dataset == 'DFD':
         # DFD_binary_cls_ds: extract faces from DFD_num_frames frames per real and fake video:
         run_DFD(compression=cfg.DFD_compression, num_frames=cfg.DFD_num_frames)
         src_path_real = f'{cfg.DFD_split_face_ds}{str(cfg.DFD_num_frames)}_frames/original_sequences/actors/'
         src_path_fake = f'{cfg.DFD_split_face_ds}{str(cfg.DFD_num_frames)}_frames/manipulated_sequences/DeepFakeDetection/'
-        gen_DFD_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.DFD_binary_cls_ds,
-                              compression=cfg.DFD_compression)
+        gen_DFD_binary_cls_ds(src_path_real, src_path_fake, dst_path=cfg.DFD_binary_cls_ds, compression=cfg.DFD_compression)
 
     elif args.dataset == 'CelebDFv1':
         run_CelebDFv1(num_frames=cfg.CelebDFv1_num_frames)
 
     elif args.dataset == 'CelebDFv2':
         run_CelebDFv2(num_frames=cfg.CelebDFv2_num_frames)
-
-    elif args.dataset == 'CelebDF++':
-        run_CelebDF_plusplus(num_frames=cfg.CelebDF_plusplus_num_frames)
 
     elif args.dataset == 'DFDC':
         run_DFDC(num_frames=cfg.DFDC_num_frames)
@@ -413,9 +364,10 @@ if __name__ == '__main__':
         run_WildDeepfake()
 
     elif args.dataset == 'DiFF':
-        # make_DiFF_set_extract_face(split_set='val')  do not the use val set
+        make_DiFF_set_extract_face(split_set='val')
         make_DiFF_set_extract_face(split_set='test')
 
     else:
         print('choose datasets [FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, DiFF]  '
               'or add the function for your customized dataset')
+
