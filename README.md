@@ -1,6 +1,6 @@
 <div align="center">
 
-# FSVFM: Scalable Face Security Vision Foundation Model for <br> Deepfake, Diffusion, and Spoofing Detection
+# FSVFM: Scalable Face Security Vision Foundation Model for Deepfake, Diffusion, and Spoofing Detection
 
 [Gaojian Wang](https://scholar.google.com/citations?user=tpP4cFQAAAAJ&hl=zh-CN&oi=ao)<sup>1,2</sup> &emsp; [Feng Lin](https://flin.group/)<sup>1,2</sup> &emsp; [Tong Wu](https://github.com/Coco-T-T?tab=repositories)<sup>1,2</sup> &emsp;
 [Zhisheng Yan](https://mason.gmu.edu/~zyan4/)<sup>3</sup> &emsp; [Kui Ren](https://scholar.google.com/citations?user=uuQA_rcAAAAJ&hl=zh-CN&oi=sra)<sup>1,2</sup>  
@@ -1035,6 +1035,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
