@@ -74,6 +74,15 @@ _C.CelebDFv2_num_frames = 32
 _C.CelebDFv2_split_face_ds = _C.finetune_data_path_dfd + f'Celeb-DF-v2/'
 
 
+# ===================CelebDF++ (added in FS-VFM)
+# ***ori data path (download)
+_C.CelebDF_plusplus_path = '../../data/Celeb-DF++/'
+# ***specific the number of extracting frames per video: int(specific)
+_C.CelebDF_plusplus_num_frames = 32
+# path to testing set (after face extraction)
+_C.CelebDF_plusplus_split_face_ds = _C.finetune_data_path_dfd + f'Celeb-DF++/'
+
+
 # ===================DFDC
 # ***ori data path
 _C.DFDC_path = '../../data/DFDC/test/'
@@ -97,7 +106,6 @@ _C.DFDC_P_split_face_ds = _C.finetune_data_path_dfd + f'DFDCP/'
 _C.DFIW_path = '../../data/deepfake_in_the_wild/'
 # path to testing set (after face extraction)
 _C.DFIW_split_face_ds = _C.finetune_data_path_dfd + f'deepfake_in_the_wild/'
-
 
 
 # ----------------------------------------dataset path for downstream diffusion facial forgery detection

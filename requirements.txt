@@ -14,7 +14,6 @@ DateTime==5.2
 debugpy==1.7.0
 decorator==5.1.1
 diskcache==5.6.3
-dlib==19.24.2
 entrypoints==0.4
 filelock==3.12.2
 fonttools==4.38.0
@@ -23,6 +22,7 @@ geomet==0.2.1.post1
 google-auth==2.23.0
 google-auth-oauthlib==0.4.6
 grpcio==1.58.0
+h5py==3.14.0
 huggingface-hub==0.16.4
 idna==3.4
 imageio==2.31.2
@@ -81,16 +81,14 @@ scipy==1.7.3
 SimpleITK==2.2.1
 six==1.16.0
 submitit==1.4.5
+torchinfo==1.8.0
 tensorboard==2.11.2
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 threadpoolctl==3.1.0
 tifffile==2021.11.2
 timm==0.4.5
-torch==1.13.1+cu117
 torch-summary==1.4.5
-torchaudio==0.13.1+cu117
-torchvision==0.14.1+cu117
 tornado==6.2
 tqdm==4.66.1
 traitlets==5.9.0
