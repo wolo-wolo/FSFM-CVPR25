@@ -33,14 +33,14 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 
 ## Release🎉 
 
-*  ****2025-10**: 🔥🔥 We extend FSFM to FS-VFMs at the [Project Page](https://fsfm-3c.github.io/fsvfm.html). 🔥🔥 We strongly recommend shifting to the FS-VFM repository. 🔥🔥**
-*  **2025-08**: We fix a bug in pre-processing the DiFF dataset: in the four subsets, the 'DiFF_real' should be renamed as 'real', keep the same as the FF++ training subset for correcting class indexs.
+*  ****2025-10**: 🔥🔥 We extend FSFM to FS-VFMs at the [Project Page](https://fsfm-3c.github.io/fsvfm.html). 🔥🔥 We strongly recommend shifting to [the FS-VFM branch](https://github.com/wolo-wolo/FSFM-CVPR25/tree/FSVFM-extension) !!! 🔥🔥**
+*  **2025-08**: We fix a bug in pre-processing the DiFF dataset: in the four subsets, the 'DiFF_real' should be renamed as 'real', keep the same as the FF++ training subset for correcting class indices.
 *  **2025-02**: Our paper has been accepted at the [CVPR25](https://cvpr.thecvf.com/Conferences/2025/AcceptedPapers) !real
 *  **2025-02**:  We updated a Unified Physical-Digital Facial Attack&Forgery Images&Videos Detector to identify [Real&Bonafide, Deepfake, Diffusion&AIGC, Spooing&Presentation-attacks] at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>. This detector is based on the FSFM ViT-B/16 (Pre-trained on VGGFace2 for 800epochs) and finetuned on a 3.6M dataset for 4-class classification (sourced from many public datasets).
 *  **2024-12**: The demo of visualizing different facial masking strategies that are introduced in FSFM-3C for MIM is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-3C_facial_masking_for_MIM'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Facial_Masking-orange'></a>
 *  **2024-12**: The online detectors (based on simply fine-tuned models of the paper implementation) is available at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>
 *  **2024-12**: The pre-trained/fine-tuned models and pre-training/fine-tuning logs of the paper implementation are available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
-*  **2024-12**: All codes including data-preprocessing, pre-training, fine-tuning, and testing are released at [this page](https://github.com/wolo-wolo/FSFM)
+*  **2024-12**: All codes, including data-preprocessing, pre-training, fine-tuning, and testing are released at [this page](https://github.com/wolo-wolo/FSFM)
 *  **2024-12**: Our paper is available at <a href='https://arxiv.org/abs/2412.12032'><img src='https://img.shields.io/badge/Paper-arXiv-red'></a>
 
 ## Table of Contents
@@ -878,6 +878,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
