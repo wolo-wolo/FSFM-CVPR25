@@ -26,14 +26,14 @@
 </div>
 
 <div align="center">
-<img src='./assets/teaser-page.png' style="width: 90%;">
+<img src='./assets/teaser-page.png' style="width: 1200;">
 
 This is the implementation of **[FSVFM](https://fsfm-3c.github.io/fsvfm.html)**, an extended version of our previous [FSFM](https://fsfm-3c.github.io/) work published at CVPR25.
 </div>
 
 ## Release🎉
 *  **2025-10**: The pre-trained/fine-tuned models of the paper implementation are also available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
-*  **2025-10**: All codes including data-preprocessing, pre-training, fine-tuning, efficient-tuning, and testing are released at [this page](https://github.com/wolo-wolo/FSFM)
+*  **2025-10**: All codes, including data-preprocessing, pre-training, fine-tuning, efficient-tuning, and testing, are released at [this page](https://github.com/wolo-wolo/FSFM-CVPR25/tree/journal-extension)
 *  **2025-10**: Our paper is available at <a href='https://arxiv.org/abs/2510.10663'><img src='https://img.shields.io/badge/Paper-arXiv-red'></a>
 
 ## Table of Contents
@@ -1035,6 +1035,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
