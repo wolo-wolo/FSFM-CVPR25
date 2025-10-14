@@ -22,7 +22,6 @@ import argparse
 
 from config import cfg
 from tools.facer import facer
-
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
@@ -186,7 +185,7 @@ if __name__ == '__main__':
                      save_vis_ps=cfg.save_vis_ps)
     else:
         print('choose datasets: FF++_o, YTF, VF2;  or add the function for your customized dataset')
-
+    
     # torch.multiprocessing.set_start_method('spawn')
     # processes = []
     # for i, path in enumerate(cfg.FF_real_face_paths_for_parsing):
