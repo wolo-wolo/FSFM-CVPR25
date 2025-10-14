@@ -27,7 +27,7 @@
  <br>
 <div align="center">
 <img src='./assets/teaser-page.png' style="width: 1200;">
-This is the implementation of **[FSVFM](https://fsfm-3c.github.io/fsvfm.html)**, an extended version of our previous [FSFM](https://fsfm-3c.github.io/) work published at CVPR25.
+This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an extended version of our previous work on [FSFM](https://fsfm-3c.github.io/), published at CVPR25.
 </div>
 
 ## Release🎉
@@ -1034,6 +1034,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
