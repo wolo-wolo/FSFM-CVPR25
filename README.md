@@ -14,9 +14,9 @@
 <div align="center">
 <a href='https://fsfm-3c.github.io/'><img src='https://img.shields.io/badge/Project-Page-blue'></a>
 <a href='https://openaccess.thecvf.com/content/CVPR2025/papers/Wang_FSFM_A_Generalizable_Face_Security_Foundation_Model_via_Self-Supervised_Facial_CVPR_2025_paper.pdf'><img src='https://img.shields.io/badge/Paper-CVPR25-red'></a>
-<a href="./LICENSE"> <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-97ca00?style=flat-square"> </a> 
 </div>
 <div align="center">
+<a href="./LICENSE"> <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-97ca00?style=flat-square"> </a>
 <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
 </div>
 <div align="center">
@@ -30,8 +30,9 @@
 This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-supervised pre-training framework to learn a transferable facial representation that boosts face security tasks.
 </div>
 
-
 ## Release🎉 
+
+*  ****2025-10**: 🔥🔥 We extend FSFM to FS-VFMs at the [Project Page](https://fsfm-3c.github.io/fsvfm.html). 🔥🔥 We strongly recommend shifting to the FS-VFM repository. 🔥🔥**
 *  **2025-08**: We fix a bug in pre-processing the DiFF dataset: in the four subsets, the 'DiFF_real' should be renamed as 'real', keep the same as the FF++ training subset for correcting class indexs.
 *  **2025-02**: Our paper has been accepted at the [CVPR25](https://cvpr.thecvf.com/Conferences/2025/AcceptedPapers) !real
 *  **2025-02**:  We updated a Unified Physical-Digital Facial Attack&Forgery Images&Videos Detector to identify [Real&Bonafide, Deepfake, Diffusion&AIGC, Spooing&Presentation-attacks] at <a href='https://huggingface.co/spaces/Wolowolo/FSFM-deepfake_diffusion_spoof_face_detection'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Deepfake/AIGC/Spoof Face Detection-orange'></a>. This detector is based on the FSFM ViT-B/16 (Pre-trained on VGGFace2 for 800epochs) and finetuned on a 3.6M dataset for 4-class classification (sourced from many public datasets).
@@ -78,7 +79,7 @@ This is the implementation of **[FSFM-3C](https://fsfm-3c.github.io/)**, a self-
 <a id="installation"></a>
 Git clone this repository, creating a conda environment, and activate it via the following command: 
 ```bash
-git clone https://github.com/wolo-wolo/FSFM.git
+git clone https://github.com/wolo-wolo/FSFM-CVPR25.git
 cd FSFM/
 conda create -n fsfm3c python=3.9.21
 conda activate fsfm3c
@@ -299,10 +300,13 @@ and also save the weights with min pre-training loss to `checkpoint-min_pretrain
 We provide the model weights on the <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
  and will continuously update them, which can be downloaded from the following links (default placed in `./fsfm-3c/pretrain/checkpoint/pretrained_models/`):
 
-|  Backbone  | Pre-trained data | Epochs |                                                   Online Network 🤗                                                    |                                                      Target Network 🤗                                                       |                                                                                                     Logs 🤗                                                                                                     |                                                            Normalize 🤗                                                            |
-|:----------:|:----------------:|:------:|:----------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-|  ViT-B/16  |   VGG-Face2(~)   |  400   | [checkpoint-400.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/checkpoint-400.pth) | [checkpoint-te-400.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/checkpoint-te-400.pth) | [log.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/log.txt)&[log_detail.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/log_detail.txt) | [pretrain_ds_mean_std.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/pretrain_ds_mean_std.txt) |
-|coming soon | 
+|     Backbone      | Pre-trained data |  Epochs  |                                                         Online Network 🤗                                                          |                                                            Target Network 🤗                                                             |                                                                  Normalize 🤗                                                                   |
+|:-----------------:|:----------------:|:--------:|:----------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------:|
+|  ViT-B/16 (FSFM)  |     VGGFace2     |   400    |       [checkpoint-400.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/checkpoint-400.pth)       |       [checkpoint-te-400.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/checkpoint-te-400.pth)       |       [pretrain_ds_mean_std.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/VF2_ViT-B/pretrain_ds_mean_std.txt)        |
+|     Extension     |
+| ViT-S/16 (FS-VFM) |     VGGFace2     |   600    | [checkpoint-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-S_VF2_600e/checkpoint-599.pth) | [checkpoint-te-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-S_VF2_600e/checkpoint-te-599.pth) | [pretrain_ds_mean_std.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-S_VF2_600e/pretrain_ds_mean_std.txt)  |
+| ViT-B/16 (FS-VFM) |     VGGFace2     |   600    | [checkpoint-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-B_VF2_600e/checkpoint-600.pth) | [checkpoint-te-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-B_VF2_600e/checkpoint-te-600.pth) | [pretrain_ds_mean_std.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-B_VF2_600e/pretrain_ds_mean_std.txt)  |
+| ViT-L/16 (FS-VFM) |     VGGFace2     |   600    | [checkpoint-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-L_VF2_600e/checkpoint-599.pth) | [checkpoint-te-600.pth](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-L_VF2_600e/checkpoint-te-599.pth) | [pretrain_ds_mean_std.txt](https://huggingface.co/Wolowolo/fsfm-3c/blob/main/pretrained_models/FS-VFM_ViT-L_VF2_600e/pretrain_ds_mean_std.txt)  |
 
 
 > - For Downstream Tasks:
@@ -321,9 +325,37 @@ The models can be downloaded from huggingface_hub `python /fsfm-3c/pretrain/down
 ```python
 from huggingface_hub import hf_hub_download
 
-hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/checkpoint-400.pth", local_dir="./pretrain/checkpoint/VF2_ViT-B", local_dir_use_symlinks=False)
-hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/checkpoint-te-400.pth", local_dir="./pretrain/checkpoint/VF2_ViT-B", local_dir_use_symlinks=False)
-hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/pretrain_ds_mean_std.txt", local_dir="./pretrain/checkpoint/VF2_ViT-B", local_dir_use_symlinks=False)
+# downloading the pre-trained FSFM-ViT-B_VF2_400e model (CVPR25 version):
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/checkpoint-400.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/checkpoint-te-400.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/VF2_ViT-B/pretrain_ds_mean_std.txt",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+
+# downloading the pre-trained FS-VFM-ViT-S_VF2_600e model (FSFM-CVPR25 extension):
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-S_VF2_600e/checkpoint-599.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-S_VF2_600e/checkpoint-te-599.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-S_VF2_600e/pretrain_ds_mean_std.txt",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+
+# downloading the pre-trained FS-VFM-ViT-B_VF2_600e model (FSFM-CVPR25 extension):
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-B_VF2_600e/checkpoint-600.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-B_VF2_600e/checkpoint-te-600.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-B_VF2_600e/pretrain_ds_mean_std.txt",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+
+# downloading the pre-trained FS-VFM-ViT-L_VF2_600e model (FSFM-CVPR25 extension):
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-L_VF2_600e/checkpoint-599.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-L_VF2_600e/checkpoint-te-599.pth",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
+hf_hub_download(repo_id="Wolowolo/fsfm-3c", filename="pretrained_models/FS-VFM_ViT-L_VF2_600e/pretrain_ds_mean_std.txt",
+                local_dir="./checkpoint/", local_dir_use_symlinks=False, resume_download=True)
 ```
 
 </details>
