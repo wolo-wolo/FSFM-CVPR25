@@ -14,6 +14,7 @@
 <div align="center">
 <a href='https://fsfm-3c.github.io/'><img src='https://img.shields.io/badge/Project-Page-blue'></a>
 <a href='https://openaccess.thecvf.com/content/CVPR2025/papers/Wang_FSFM_A_Generalizable_Face_Security_Foundation_Model_via_Self-Supervised_Facial_CVPR_2025_paper.pdf'><img src='https://img.shields.io/badge/Paper-CVPR25-red'></a>
+<a href='https://arxiv.org/abs/2510.10663'><img src='https://img.shields.io/badge/Extension-Paper-red'></a>
 </div>
 <div align="center">
 <a href="./LICENSE"> <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-97ca00?style=flat-square"> </a>
@@ -877,6 +878,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
