@@ -32,11 +32,16 @@ This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an 
 </div>
 
 ## Release🎉
+*  **2025-10**: For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. 
 *  **2025-10**: The pre-trained/fine-tuned models of the paper implementation are also available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
 *  **2025-10**: All codes, including data-preprocessing, pre-training, fine-tuning, efficient-tuning, and testing, are released at [this page](https://github.com/wolo-wolo/FSFM-CVPR25/tree/FSVFM-extension). <br> ⛔ **Note that use `git clone --branch FSVFM-extension --single-branch https://github.com/wolo-wolo/FSFM-CVPR25.git`**
 *  **2025-10**: Our paper is available at <a href='https://arxiv.org/abs/2510.10663'><img src='https://img.shields.io/badge/Paper-arXiv-red'></a>
 
 ## Table of Contents
+> If you are only interested in a specific downstream task, just download [🤗 Pre-trained Checkpoints (➕FS-VFM Extension🔼)](#pre-trained-model), skip [⏳ FS-VFM Pre-training](#fsvfm-pretraining), and start [⚫ Cross-Dataset Deepfake Detection (DfD)](#dfd), [⚫ Unseen Diffusion Facial Forgery Detection (DiFF)](#diff), or [⚫ Cross-Domain Face Anti-Spoofing (FAS)](#fas), directly.
+
+> For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. You can download and put them into the corresponding [📁 DFD/DiFF/FAS Folder Structure]. You must follow the 🛡️ Copyright of the above datasets belongs to their original providers.
+
   - [🔧 Installation](#installation)
   - [⏳ FS-VFM Pre-training](#fsvfm-pretraining)
     - [⚫ Pre-training Data](#pre-training-data)
@@ -1035,6 +1040,7 @@ If our research helps your work, please consider giving us a star ⭐ or citing 
     <img src="https://mapmyvisitors.com/map.png?cl=ffffff&w=a&t=tt&d=n3-MPEk09qAvFD1AnIN5HeQI4bPeYDvQjLiYkt_wZDo" />
   </a>
 </div>
+
 
 
 
