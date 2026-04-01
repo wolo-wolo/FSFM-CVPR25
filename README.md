@@ -32,7 +32,7 @@ This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an 
 </div>
 
 ## Release🎉
-*  **2025-10**: For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. 
+*  **2025-10**: For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. (Some datasets have been removed due to copyright issues. You can apply for the original datasets yourself and use our code to process them.)
 *  **2025-10**: The pre-trained/fine-tuned models of the paper implementation are also available at <a href='https://huggingface.co/Wolowolo/fsfm-3c'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FSFM_3C Model-brown'></a>
 *  **2025-10**: All codes, including data-preprocessing, pre-training, fine-tuning, efficient-tuning, and testing, are released at [this page](https://github.com/wolo-wolo/FSFM-CVPR25/tree/FSVFM-extension). <br> ⛔ **Note that use `git clone --branch FSVFM-extension --single-branch https://github.com/wolo-wolo/FSFM-CVPR25.git`**
 *  **2025-10**: Our paper is available at <a href='https://arxiv.org/abs/2510.10663'><img src='https://img.shields.io/badge/Paper-arXiv-red'></a>
