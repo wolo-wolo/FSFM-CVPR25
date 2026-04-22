@@ -3,7 +3,8 @@ We provide this preprocessing pipeline to facilitate the reproduction.
 
 1) install mtcnn for face detection.
     ```bash
-    cd /prerocess/tools
+    mkdir /preprocess_FAS/tools
+    cd /preprocess_FAS/tools
     git clone https://github.com/YYuanAnyVision/mxnet_mtcnn_face_detection.git
     ```
 
