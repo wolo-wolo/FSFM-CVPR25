@@ -869,7 +869,7 @@ To evaluate the transferability of our method for FAS under significant domain s
 For downstream 0-shot cross-domain FAS task, we follow the Protocol 1 (MCIO) 
 in [few_shot_fas](https://github.com/hhsinping/few_shot_fas) and [flip](https://github.com/koushiksrivats/FLIP/blob/main/docs/datasets.md) to prepare and preprocess data.
 - Download the source (MCIO or WCS) datasets
-- We also add the `/datasets/finetune/preprocess_FAS` to help processing downloaded datasets, please refer to its [README.md]().
+- We also add the `/datasets/finetune/preprocess_FAS` to help processing downloaded datasets, please refer to its [README.md](https://github.com/wolo-wolo/FSFM-CVPR25/tree/FSVFM-extension/datasets/finetune/preprocess_FAS).
 - 📁 Put the prepared datasets i.e., `data/` to our **default Folder Structure**, as follows:
   ```bash
   datasets/
