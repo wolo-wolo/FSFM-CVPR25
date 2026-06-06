@@ -31,6 +31,15 @@
 This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an extended version of our previous work on [FSFM (CVPR25)](https://fsfm-3c.github.io/).
 </div>
 
+## Research Areas
+
+- face security foundation models
+- self-supervised facial representation learning
+- generalized deepfake detection
+- cross-domain face anti-spoofing
+- diffusion-generated face detection / diffusion facial forensics
+- efficient adaptation of face-security-oriented visual backbones
+
 ## Release🎉
 *  **TPAMI R1 branch**: This branch adds FS-VFM Linear Probing code and DF40 preprocessing/evaluation support for the journal revision.
 *  **2025-10**: For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. (Some datasets have been removed due to copyright issues. You can apply for the original datasets yourself and use our code to process them.)
@@ -43,6 +52,7 @@ This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an 
 
 > For convenience, we also provide the processed downstream datasets used in our papers at <a href='https://huggingface.co/datasets/Wolowolo/DF_DiFF_FAS_dataset_in_FSFM_FSVFM/tree/main/finetune_datasets'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Downstream Dataset-purple'></a>. You can download and put them into the corresponding [📁 DFD/DiFF/FAS Folder Structure]. You must follow the 🛡️ Copyright of the above datasets belongs to their original providers.
 
+  - [Research Areas](#research-areas)
   - [🔧 Installation](#installation)
   - [⏳ FS-VFM Pre-training](#fsvfm-pretraining)
     - [⚫ Pre-training Data](#pre-training-data)
@@ -76,7 +86,7 @@ This is the implementation of [FSVFM](https://fsfm-3c.github.io/fsvfm.html), an 
       - [⏩ FS-Adapter PEFT for Cross-Dataset Deepfake Detection (DfD)](#dfd-peft-scripts)
       - [⏩ FS-Adapter PEFT for Unseen Diffusion Facial Forgery Detection (DiFF)](#diff-peft-scripts)
       - [⏩ FS-Adapter PEFT for Cross-Domain Face Anti-Spoofing (FAS)](#fas-peft-scripts)
-  - [Citation](#citing-fsfm-3c)
+  - [Citation](#citation)
 
 ---
 
@@ -1016,24 +1026,29 @@ as summaries as:
 # Citation
 <a id="citation"></a>
 
-If our research helps your work, please consider giving us a star ⭐ or citing us:
-```
-@misc{wang2025scalablefacesecurityvision,
-      title={Scalable Face Security Vision Foundation Model for Deepfake, Diffusion, and Spoofing Detection}, 
-      author={Gaojian Wang and Feng Lin and Tong Wu and Zhisheng Yan and Kui Ren},
-      year={2025},
-      eprint={2510.10663},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2510.10663}, 
-}
+If this repository, released models, or scripts are useful for your research, please cite the corresponding paper.
 
+**FSFM (CVPR 2025):**
+```bibtex
 @inproceedings{wang2025fsfm,
   title={Fsfm: A generalizable face security foundation model via self-supervised facial representation learning},
   author={Wang, Gaojian and Lin, Feng and Wu, Tong and Liu, Zhenguang and Ba, Zhongjie and Ren, Kui},
   booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
   pages={24364--24376},
   year={2025}
+}
+```
+
+**FS-VFM (extended technical version; arXiv technical report):**
+```bibtex
+@misc{wang2025scalablefacesecurityvision,
+      title={Scalable Face Security Vision Foundation Model for Deepfake, Diffusion, and Spoofing Detection},
+      author={Gaojian Wang and Feng Lin and Tong Wu and Zhisheng Yan and Kui Ren},
+      year={2025},
+      eprint={2510.10663},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2510.10663},
 }
 ```
 <div align="center">

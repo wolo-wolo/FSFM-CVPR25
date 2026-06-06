@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: "If this repository, released models, or scripts are useful for your research, please cite the corresponding paper."
+title: "Fsfm: A generalizable face security foundation model via self-supervised facial representation learning"
+type: software
+authors:
+  - family-names: Wang
+    given-names: Gaojian
+  - family-names: Lin
+    given-names: Feng
+  - family-names: Wu
+    given-names: Tong
+  - family-names: Liu
+    given-names: Zhenguang
+  - family-names: Ba
+    given-names: Zhongjie
+  - family-names: Ren
+    given-names: Kui
+preferred-citation:
+  type: conference-paper
+  title: "Fsfm: A generalizable face security foundation model via self-supervised facial representation learning"
+  authors:
+    - family-names: Wang
+      given-names: Gaojian
+    - family-names: Lin
+      given-names: Feng
+    - family-names: Wu
+      given-names: Tong
+    - family-names: Liu
+      given-names: Zhenguang
+    - family-names: Ba
+      given-names: Zhongjie
+    - family-names: Ren
+      given-names: Kui
+  collection-title: "Proceedings of the Computer Vision and Pattern Recognition Conference"
+  year: 2025
+  start: 24364
+  end: 24376
+references:
+  - type: report
+    title: "Scalable Face Security Vision Foundation Model for Deepfake, Diffusion, and Spoofing Detection"
+    authors:
+      - family-names: Wang
+        given-names: Gaojian
+      - family-names: Lin
+        given-names: Feng
+      - family-names: Wu
+        given-names: Tong
+      - family-names: Yan
+        given-names: Zhisheng
+      - family-names: Ren
+        given-names: Kui
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2510.10663"
+        description: "arXiv identifier"
+    url: "https://arxiv.org/abs/2510.10663"
+    notes: "Extended technical version; arXiv technical report in cs.CV."
