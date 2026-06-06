@@ -1,0 +1,54 @@
+# Python/cache
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Logs and experiment outputs
+logs/
+runs/
+wandb/
+outputs/
+checkpoint/
+checkpoints/
+experiments_test/
+*.log
+log.txt
+events.out.tfevents.*
+
+# Dataset roots and generated preprocessing outputs
+datasets/data/
+datasets/deepfakes_detection/
+datasets/finetune_datasets/
+datasets/pretrain_datasets/
+datasets/**/data/
+
+# Model weights and large local artifacts
+*.pth
+*.pt
+*.pth.tar
+*.ckpt
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.npy
+*.npz
+
+# Local release/history folders not intended for GitHub
+previous_baselines/
+baselines/pretrained/
+fsvfm/linearprobe/tools/
+fsvfm/linearprobe/run_logs/
+
+# OS/editor noise
+.DS_Store
+.vscode/

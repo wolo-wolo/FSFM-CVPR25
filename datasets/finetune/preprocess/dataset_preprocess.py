@@ -345,12 +345,176 @@ def make_DiFF_set_extract_face(split_set):
                         extract_and_save_face(img, dst_path_real, file)
 
 
+# ------------------------DF40 per-subset test preprocessing---------------------
+
+def _df40_is_image_file(name):
+    return name.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.webp'))
+
+
+def _df40_safe_name(name):
+    return name.replace('/', '__').replace('\\', '__').replace(' ', '_')
+
+
+def _df40_relpath_for_split(img_path):
+    """Return a path relative to cfg.finetune_data_path_dfd for CustomDataset testing."""
+    return os.path.relpath(os.path.normpath(img_path), os.path.normpath(cfg.finetune_data_path_dfd))
+
+
+def _df40_generate_sample_label_pairs(base_path, label):
+    """Traverse images and generate '<relative_path> <label>' rows.
+
+    FS-VFM DFD/DiFF training uses torchvision ImageFolder with folders like
+    fake_* and real_*. ImageFolder sorts folder names alphabetically, so:
+      fake_* -> class 0
+      real_* -> class 1
+    engine_finetune.py uses softmax[:, 1] as the positive score.
+    Therefore DF40 split labels must be:
+      fake -> 0
+      real -> 1
+    """
+    samples = []
+    label_value = cfg.DF40_real_label if label == 'real' else cfg.DF40_fake_label
+    if not os.path.exists(base_path):
+        return samples
+    for root, _, files in os.walk(base_path):
+        for file in sorted(files):
+            if file.endswith(cfg.img_format):
+                img_path = os.path.join(root, file)
+                samples.append(f"{_df40_relpath_for_split(img_path)} {label_value}")
+    return samples
+
+
+def _df40_write_split(output_file, *sample_lists):
+    samples = []
+    for sample_list in sample_lists:
+        samples.extend(sample_list)
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(samples))
+    print(f"[split] {output_file}: {len(samples)} samples")
+
+
+def _df40_extract_face_from_image_file(src_img, dst_dir, save_name):
+    os.makedirs(dst_dir, exist_ok=True)
+    img = cv2.imread(src_img)
+    if img is None:
+        print(f"[warn] skip unreadable image: {src_img}")
+        return False
+    extract_and_save_face(img, dst_dir, save_name)
+    return True
+
+
+def run_DF40():
+    """Preprocess DF40 for per-subset testing.
+
+    Images are read by cv2, faces are detected/cropped with the existing
+    preprocessing utilities, and outputs are saved under
+    cfg.DF40_split_face_ds/32_frames/test/{real,fake}/...
+    """
+    print("making DF40 test dataset, extracting/reorganizing faces to", cfg.DF40_split_face_ds)
+    num_frames_name = f"{cfg.DF40_num_frames}_frames"
+    dst_root = os.path.join(cfg.DF40_split_face_ds, num_frames_name, 'test')
+
+    ff_real_src = cfg.DF40_FF_real_path
+    ff_real_dst = os.path.join(dst_root, 'real', 'ff_youtube')
+    try:
+        ff_test_ids = set(get_FF_video_split(cfg.FF_test_split))
+    except Exception as e:
+        print(f"[warn] could not load FF++ test split ({e}); all DF40 FF real folders will be used")
+        ff_test_ids = None
+
+    if os.path.exists(ff_real_src):
+        for folder in tqdm(sorted(os.listdir(ff_real_src)), desc='DF40 real FF++'):
+            folder_path = os.path.join(ff_real_src, folder)
+            if not os.path.isdir(folder_path):
+                continue
+            if ff_test_ids is not None and folder[-3:] not in ff_test_ids:
+                continue
+            for file in sorted(os.listdir(folder_path)):
+                if _df40_is_image_file(file):
+                    stem = os.path.splitext(file)[0]
+                    save_name = f"{folder}_frame_{stem}{cfg.img_format}"
+                    _df40_extract_face_from_image_file(os.path.join(folder_path, file), ff_real_dst, save_name)
+    else:
+        print(f"[warn] DF40 FF++ real path does not exist: {ff_real_src}")
+
+    df40_src = cfg.DF40_test_path
+    if not os.path.exists(df40_src):
+        raise FileNotFoundError(f"DF40 test path not found: {df40_src}")
+
+    for subset in tqdm(sorted(os.listdir(df40_src)), desc='DF40 subsets'):
+        subset_path = os.path.join(df40_src, subset)
+        if not os.path.isdir(subset_path) or subset.startswith('__MACOSX'):
+            continue
+        print(f"[DF40] processing subset: {subset}")
+        for subdir, _, files in os.walk(subset_path):
+            if '__MACOSX' in subdir:
+                continue
+            low_parts = [p.lower() for p in os.path.normpath(subdir).split(os.sep)]
+
+            # Keep the FF domain for the FF++-trained cross-dataset protocol.
+            if 'cdf' in low_parts:
+                continue
+
+            if 'real' in low_parts:
+                label_dir = os.path.join(dst_root, 'real', subset)
+            else:
+                label_dir = os.path.join(dst_root, 'fake', subset)
+
+            rel_dir = os.path.relpath(subdir, subset_path)
+            rel_prefix = '' if rel_dir == '.' else _df40_safe_name(rel_dir) + '_'
+            for file in sorted(files):
+                if not _df40_is_image_file(file):
+                    continue
+                src_img = os.path.join(subdir, file)
+                stem = os.path.splitext(file)[0]
+                parent = os.path.basename(os.path.dirname(src_img))
+                if 'frames' in low_parts:
+                    save_name = f"{rel_prefix}{parent}_frame_{stem}{cfg.img_format}"
+                else:
+                    save_name = f"{rel_prefix}{stem}{cfg.img_format}"
+                _df40_extract_face_from_image_file(src_img, label_dir, save_name)
+
+
+def gen_DF40_subset_test_splits():
+    """Generate one test split txt for each DF40 subset."""
+    num_frames_name = f"{cfg.DF40_num_frames}_frames"
+    dst_root = os.path.join(cfg.DF40_split_face_ds, num_frames_name, 'test')
+    split_root = cfg.DF40_split_path
+
+    default_real_dir = os.path.join(dst_root, 'real', 'ff_youtube')
+    default_real = _df40_generate_sample_label_pairs(default_real_dir, 'real')
+
+    fake_root = os.path.join(dst_root, 'fake')
+    real_root = os.path.join(dst_root, 'real')
+    if not os.path.exists(fake_root):
+        raise FileNotFoundError(f"DF40 fake output path not found: {fake_root}. Run --dataset DF40 first.")
+
+    for subset in sorted(os.listdir(fake_root)):
+        fake_dir = os.path.join(fake_root, subset)
+        if not os.path.isdir(fake_dir):
+            continue
+        subset_real_dir = os.path.join(real_root, subset)
+        real_samples = _df40_generate_sample_label_pairs(subset_real_dir, 'real')
+        if not real_samples:
+            real_samples = default_real
+        fake_samples = _df40_generate_sample_label_pairs(fake_dir, 'fake')
+        if not fake_samples:
+            print(f"[warn] DF40 subset {subset} has no fake samples, skip split")
+            continue
+        if not real_samples:
+            print(f"[warn] DF40 subset {subset} has no real samples, skip split")
+            continue
+        output_file = os.path.join(split_root, f"{_df40_safe_name(subset)}_{cfg.DF40_num_frames}_frames_test.txt")
+        _df40_write_split(output_file, real_samples, fake_samples)
+
+
 def get_args_parser():
     parser = argparse.ArgumentParser('FS-VFM fine-tune data (DfD/DiFF) preprocessing', add_help=False)
     parser.add_argument('--dataset', default='FF++',
                         help='choose from '
                              '[FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, CelebDF++,'
-                             'DiFF]')
+                             'DiFF, DF40]')
     return parser
 
 
@@ -403,6 +567,10 @@ if __name__ == '__main__':
     elif args.dataset == 'CelebDF++':
         run_CelebDF_plusplus(num_frames=cfg.CelebDF_plusplus_num_frames)
 
+    elif args.dataset == 'DF40':
+        run_DF40()
+        gen_DF40_subset_test_splits()
+
     elif args.dataset == 'DFDC':
         run_DFDC(num_frames=cfg.DFDC_num_frames)
 
@@ -417,5 +585,5 @@ if __name__ == '__main__':
         make_DiFF_set_extract_face(split_set='test')
 
     else:
-        print('choose datasets [FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, DiFF]  '
+        print('choose datasets [FF++_all, FF++_each, DFD, CelebDFv1, CelebDFv2, DFDC, DFDC_P, WildDeepfake, DiFF, DF40]  '
               'or add the function for your customized dataset')

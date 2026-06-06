@@ -108,6 +108,28 @@ _C.DFIW_path = '../../data/deepfake_in_the_wild/'
 _C.DFIW_split_face_ds = _C.finetune_data_path_dfd + f'deepfake_in_the_wild/'
 
 
+# ===================DF40 (testing only)
+# ***ori data path (download)
+_C.DF40_FF_real_path = '../../data/DF40/FaceForensics++/original_sequences/youtube/c23/frames/'
+_C.DF40_test_path = '../../data/DF40/test/'
+# ***specific the number of extracting frames/images used per subset split label name
+_C.DF40_num_frames = 32
+# path to testing set (after face extraction)
+_C.DF40_split_face_ds = _C.finetune_data_path_dfd + f'DF40/'
+
+
+# Label split files for DF40 per-subset testing.
+# Paths written into the txt files are relative to _C.finetune_data_path_dfd,
+# so main_test_DfD_df40.py can use:
+#   --dataset_abs_path ../../../datasets/finetune_datasets/deepfakes_detection
+_C.DF40_split_path = _C.finetune_data_path_dfd + f'Splits/DF40_subsets/'
+# Label convention for FS-VFM DFD/DiFF ImageFolder training.
+# ImageFolder sorts class folders alphabetically, so fake_* is class 0 and real_* is class 1.
+# engine_finetune.py evaluates F.softmax(output, dim=1)[:, 1] as the positive score.
+_C.DF40_fake_label = 0
+_C.DF40_real_label = 1
+
+
 # ----------------------------------------dataset path for downstream diffusion facial forgery detection
 _C.finetune_data_path_diff = '../../finetune_datasets/diffusion_facial_forgery_detection/'
 
